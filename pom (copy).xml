@@ -17,30 +17,6 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	  <scm>
-	    <connection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</connection>
-	    <developerConnection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</developerConnection>
-	    <tag>v${project.version}</tag>
-	  </scm>
-	  <distributionManagement>
-	    <repository>
-	      <uniqueVersion>false</uniqueVersion>
-	      <id>nexus</id>
-	      <name>Releases Repository</name>
-	      <url>${releasesRepositoryUrl}</url>
-	    </repository>
-	    <snapshotRepository>
-	      <uniqueVersion>false</uniqueVersion>
-	      <id>nexus</id>
-	      <name>SnapshotsRepository</name>
-	      <url>${snapshotsRepositoryUrl}</url>
-	    </snapshotRepository>
-	    <site>
-	      <id>nexus</id>
-	      <url>${mySiteUrl}/${project.artifactId}/${project.version}</url>
-	    </site>
-	  </distributionManagement>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -102,48 +78,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<plugin>
-        <artifactId>maven-site-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-source-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>jacoco-initialize</id>
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>jacoco-site</id>
-            <phase>package</phase>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <destFile>${basedir}/target/jacoco.exec</destFile>
-          <dataFile>${basedir}/target/jacoco.exec</dataFile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-release-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
 		</plugins>
 	</build>
 </project>
