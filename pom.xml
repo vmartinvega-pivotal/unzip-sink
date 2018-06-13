@@ -1,54 +1,65 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>io.tim.fastdata</groupId>
-	<artifactId>unzip-sink</artifactId>
-	<version>1.0.7-SNAPSHOT</version>
-	<packaging>jar</packaging>
-
-	<name>unzip-sink</name>
-	<description>SCDF sink that uncompresses ZIP files</description>
-
-	<parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.tim.fastdata</groupId>
+  <artifactId>unzip-sink</artifactId>
+  <version>1.0.7-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>unzip-sink</name>
+  <description>SCDF sink that uncompresses ZIP files</description>
+  
+  <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
-	</parent>
-
-	  <scm>
-	    <connection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</connection>
-	    <developerConnection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</developerConnection>
-	    <tag>v${project.version}</tag>
-	  </scm>
-	  <distributionManagement>
-	    <repository>
-	      <uniqueVersion>false</uniqueVersion>
-	      <id>nexus</id>
-	      <name>Releases Repository</name>
-	      <url>${releasesRepositoryUrl}</url>
-	    </repository>
-	    <snapshotRepository>
-	      <uniqueVersion>false</uniqueVersion>
-	      <id>nexus</id>
-	      <name>SnapshotsRepository</name>
-	      <url>${snapshotsRepositoryUrl}</url>
-	    </snapshotRepository>
-	    <site>
-	      <id>nexus</id>
-	      <url>${mySiteUrl}/${project.artifactId}/${project.version}</url>
-	    </site>
-	  </distributionManagement>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
-	</properties>
-
-	<dependencies>
+  </parent>
+  
+  <scm>
+    <connection>scm:git:${gitServerUrl}/demodevops/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:${gitServerUrl}/demodevops/${project.artifactId}.git</developerConnection>
+    <tag>v${project.version}</tag>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>nexus</id>
+      <name>Releases Repository</name>
+      <url>${releasesRepositoryUrl}</url>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>nexus</id>
+      <name>SnapshotsRepository</name>
+      <url>${snapshotsRepositoryUrl}</url>
+    </snapshotRepository>
+    <site>
+      <id>nexus</id>
+      <url>${mySiteUrl}/com.tim.sdp/${project.artifactId}/${project.version}</url>
+    </site>
+  </distributionManagement>
+  <properties>
+    <springfox-version>2.6.1</springfox-version>
+    <docker.image.prefix>springio</docker.image.prefix>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+	<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>1.5.7.RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-compress</artifactId>
@@ -83,26 +94,113 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-<plugin>
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.10</version>
+        </plugin>
+        <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.3.0.603</version>
+          <configuration>
+            <sonar.branch>${git.branch}</sonar.branch>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.7.9</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>2.20.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <aggregate>true</aggregate>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <goals>deploy, sonar:sonar</goals>
+            <tagNameFormat>v@{project.version}</tagNameFormat>
+            <pushChanges>true</pushChanges>
+            <arguments>${release.arguments}</arguments>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.7.0</version>
+          <configuration>
+            <source>8</source>
+            <target>8</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.7</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-webdav-jackrabbit</artifactId>
+              <version>3.0.0</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.0.0</version>
+          <configuration>
+            <failOnError>false</failOnError>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>1.5.7.RELEASE</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.9.5</version>
+          <configuration>
+            <connectionType>developerConnection</connectionType>
+            <scmVersion>v${project.version}</scmVersion>
+            <scmVersionType>tag</scmVersionType>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
         <artifactId>maven-site-plugin</artifactId>
       </plugin>
       <plugin>
@@ -144,6 +242,6 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-		</plugins>
-	</build>
+    </plugins>
+  </build>
 </project>
