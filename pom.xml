@@ -4,7 +4,7 @@
 
 	<groupId>io.tim.fastdata</groupId>
 	<artifactId>unzip-sink</artifactId>
-	<version>1.0.6-SNAPSHOT</version>
+	<version>1.0.6</version>
 	<packaging>jar</packaging>
 
 	<name>unzip-sink</name>
@@ -20,7 +20,7 @@
 	  <scm>
 	    <connection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</connection>
 	    <developerConnection>scm:git:${gitServerUrl}/vmartinvega-pivotal/${project.artifactId}.git</developerConnection>
-	    <tag>v${project.version}</tag>
+	    <tag>unzip-sink-1.0.6</tag>
 	  </scm>
 	  <distributionManagement>
 	    <repository>
