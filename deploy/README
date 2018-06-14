@@ -1,0 +1,9 @@
+#Environment variables available for the script
+# PWS_USER  -- Pcf user
+# PWS_PWD   -- Pcf password
+# PWS_ORG   -- Pcf org
+# PWS_SPACE -- Pcf space
+# PWS_API   -- Pcf api url
+# APP_JAR_FILE -- Path to the jar file for the application
+
+
